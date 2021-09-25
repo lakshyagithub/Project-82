@@ -1,0 +1,103 @@
+<html>
+<head>  
+<style>.body_backgorund {
+    background-position: center;
+    background-size: cover;
+  }
+  body{
+    background-color: orange;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+  }
+  h1
+  {
+      color: rgb(255, 255, 255); 
+      font-size: 40px;
+  }
+  #myCanvas
+  {
+      border-width:10px;
+      background-color: white; 
+      border-style:solid;
+      cursor: pointer;
+  }
+
+  button {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 10px 42px;
+    font-size: 16px;
+  }
+
+  input
+  {
+    margin-right: 20px;
+  }
+  #clear{
+      cursor: pointer;
+  }
+  </style>
+
+    <script type="text/javascript">
+</script>
+
+</head>
+<body class="body_backgorund">
+
+<div align="center">
+<h1>Paint</h1>
+
+    <canvas id="myCanvas" width="800" height="360"></canvas>
+        <br><br>
+
+<span>Radius - </span><input type="number" placeholder="Radius" id="radius_box">
+<span>Color - </span><input type="text" placeholder="Color" id="color">
+<span>Width - </span><input type="number" placeholder="Width" id="width_box">
+<br>
+<br>
+<button id="clear" onclick="clear_area();">Clear</button>
+    </div>
+<script>
+    var mouseEvent = "Empty";
+    var Canvas = document.getElementById("myCanvas")
+    
+    var Radius = 10;
+    var color = "Red";
+    var Width_box = 2;
+    var ctx = Canvas.getContext("2d");
+
+    Canvas.addEventListener("mousedown",my_mousedown);
+    function my_mousedown(e){
+        color = document.getElementById("color").value;
+        Width_box = document.getElementById("width_box").value;
+        Radius = document.getElementById("radius_box").value;
+        mouseEvent = "mouseDown";
+    }
+    Canvas.addEventListener("mousemove",my_mousemove);
+    function my_mousemove(e){
+      var current_position_of_mouse_x = e.clientX - Canvas.offsetLeft;
+      var current_position_of_mouse_y = e.clientY - Canvas.offsetTop;
+
+      if (mouseEvent == "mouseDown"){
+        console.log("Current_position_of_x_and_y_coordinates = ");
+        console.log("x = " + current_position_of_mouse_x,"y = " + current_position_of_mouse_y );
+        ctx.beginPath();
+        ctx.strokeStyle = color;
+        ctx.lineWidth = width_box;
+        ctx.arc(current_position_of_mouse_x,current_position_of_mouse_y,Radius,0,2 * Math.PI);
+        //ctx.arc(200,200,40,0,Math.PI)
+        ctx.stroke();
+      }
+    }
+
+    Canvas.addEventListener("mouseup",my_mouseup);
+    function my_mouseup(e){
+        mouseEvent = "mouseUp";
+    }
+    function clear_area(){
+      ctx.clearRect(0,0,800,360)
+    }
+</script>
+</body>
+</html>
